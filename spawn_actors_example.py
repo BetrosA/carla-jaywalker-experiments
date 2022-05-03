@@ -1,5 +1,7 @@
-# 4/13/2022
-# Created by: Ryan Cai
+# Ryan Cai
+# xcai30@ucsc.edu
+# 4/19/2022
+# basic script to spawn some actors in CARLA
 import carla
 import random
 
@@ -8,44 +10,42 @@ ghost = '127.0.0.1'
 gport = 2000
 
 client = carla.Client(ghost, gport)
-client.set_timeout(10.0)
+client.set_timeout(20.0)
 
-print("server ver: ", client.get_server_version)
-print("client ver: ", client.get_client_version)
+#print("server ver: ", client.get_server_version())
+#print("client ver: ", client.get_client_version())
 
 # get all available maps from client
 print(client.get_available_maps())
 
 # load world and get map
-world = client.load_world('circle_t_junctions')
-map = world.get_map
-
+world = client.load_world('Town01')
+map = world.get_map()
 
 # get points from map
 spawn_points = map.get_spawn_points()
-spawn_point = spawn_points[0]
-
-for point in spawn_points:
-        print(f"point: ({point.location.x,}, {point.location.y})")
-        print(f"rotation: ({point.rotation.pitch}, {point.rotation.yaw}, {point.rotation.roll})")
 
 # get blueprint
 bplib = world.get_blueprint_library()
 
 # get a audi a2 blueprint
 vehicles = bplib.filter('vehicle.audi.a2')
-vbp = vehicles[0]
 
 # spawn vehicle at specific point
-world.spawn_actor(vbp, random(spawn_points))
+for i in range(3):
+        world.spawn_actor(random.choice(vehicles), random.choice(spawn_points))
 
-# get a pedestrian bp
+# get pedestrian bp
 pedestrians = bplib.filter('walker.pedestrian.0001')
-pbp = pedestrians[0]
-world.spawn_actor(pbp, random(spawn_points))
+walker_transform = carla.Transform()
+for i in range(10):
+        loc = world.get_random_location_from_navigation()
+        # locations.append(loc)
+        walker_transform.location = loc
+        world.try_spawn_actor(random.choice(pedestrians), walker_transform)
 
-# get a camera and attach to a pedestrian
-cameras = bplib.filter('sensor.camera.rgb')
-cbp = cameras[0]
-world.spawn_actor(cbp, random(spawn_points), attach_to=pbp.id)
+# get spectator from world
+camera = world.get_spectator()
+camera.set_transform(random.choice(spawn_points))
+
 

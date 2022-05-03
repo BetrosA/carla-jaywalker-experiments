@@ -2,6 +2,7 @@ import click
 from research import ResearchFactory
 from lib import MapNames
 
+
 @click.command()
 @click.option(
     '--max_ticks',

@@ -1,11 +1,13 @@
 import click
 from research import ResearchFactory
+from lib import MapNames
+
 
 @click.command()
 @click.option(
     '--max_ticks',
     metavar='number',
-    default=100,
+    default=200,
     type=int,
     help='Number of ticks the simulator will run'
     )
