@@ -12,7 +12,7 @@ from lib import MapNames
     help='Number of ticks the simulator will run'
     )
 def r1v1Default(max_ticks):
-    research = ResearchFactory.createResearch1v1(map=MapNames.Town02_Opt)
+    research = ResearchFactory.createResearch1v1()
     research.run(maxTicks=max_ticks)
 
 

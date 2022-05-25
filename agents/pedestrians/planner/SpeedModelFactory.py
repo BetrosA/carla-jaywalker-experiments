@@ -1,5 +1,6 @@
 from random import Random
 from agents.pedestrians.factors import InternalFactors
+from agents.pedestrians.speed_models import AggresiveSpeedModel
 from agents.pedestrians.speed_models.RandomSpeedModel import RandomSpeedModel
 from lib import ActorManager, ObstacleManager
 from ..speed_models import *
@@ -8,7 +9,8 @@ class SpeedModelFactory:
 
     modelNameMap = {
         "static": StaticSpeedModel,
-        "random": RandomSpeedModel
+        "random": RandomSpeedModel,
+        "aggresive": AggresiveSpeedModel
     }
 
     @staticmethod
