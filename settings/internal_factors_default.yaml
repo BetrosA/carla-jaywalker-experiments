@@ -4,7 +4,11 @@ risk_level: "risky"
 relaxation_time: 0.1
 desired_speed: 2
 desired_distance_gap: 2
+<<<<<<< HEAD
 speed_model: "random"
+=======
+speed_model: "aggressive"
+>>>>>>> 0ac3dd7fe444d7439a055159082ea0d97fcc0bcd
 # desired_time_gap: 1
 
 # speed change related factor.
