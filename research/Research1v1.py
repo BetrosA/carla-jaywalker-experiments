@@ -43,8 +43,9 @@ class Research1v1(BaseResearch):
             settings = circular_t_junction_settings
         elif mapName == MapNames.Town02_Opt:
             settings = town02_settings
-
         self.settingsManager = SettingsManager(self.client, settings)
+
+
         self.pedFactory = PedestrianFactory(self.client, visualizer=self.visualizer, time_delta=self.time_delta)
         self.vehicleFactory = VehicleFactory(self.client, visualizer=self.visualizer)
 
@@ -55,6 +56,10 @@ class Research1v1(BaseResearch):
 
         # self.optionalFactors = [Factors.CROSSING_ON_COMING_VEHICLE, Factors.SURVIVAL_DESTINATION]
         self.optionalFactors = [Factors.SURVIVAL_DESTINATION, Factors.AGGRESSIVE_PEDESTRIAN]
+
+        self.optionalFactors = [Factors.SURVIVAL_DESTINATION, Factors.DRUNKEN_WALKER, Factors.FREEZING_FACTOR]
+
+        # self.optionalFactors = [Factors.SURVIVAL_DESTINATION, Factors.FREEZING_FACTOR]
 
         self.setup()
 
@@ -68,6 +73,15 @@ class Research1v1(BaseResearch):
         self.logger.info('\ndestroying  vehicles')
         if self.vehicle is not None:
             self.vehicleFactory.destroy(self.vehicle)
+
+    
+    def setMap(self, mapName:MapNames):
+        raise Exception('map cannot be changed for a research setting')
+
+    def setSettings(self, settingsId):
+        self.settingsId = settingsId
+        self.setup()
+
 
     def setup(self):
         # self.settingsManager.load("setting3")
@@ -359,7 +373,7 @@ class Research1v1(BaseResearch):
             return
 
         if self.walkerAgent.isFinished():
-            print(f"Walker {self.walkerAgent.walker.id} reached destination. Going back")
+            self.logger.warn(f"Walker {self.walkerAgent.walker.id} reached destination. Going back")
             # if walkerAgent.destination == walkerSetting.destination:
             #     walkerAgent.set_destination(walkerSetting.source)
             #     visualizer.drawDestinationPoint(destination)

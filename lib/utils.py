@@ -5,6 +5,7 @@ from shapely.geometry import LineString, Point
 from typing import List, Dict
 import matplotlib.pyplot as plt
 import numpy as np
+import copy
 
 red = carla.Color(255, 0, 0)
 green = carla.Color(0, 255, 0)
@@ -36,7 +37,7 @@ class Utils:
     @staticmethod
     def getTimeDelta(world):
         settings = world.get_settings()
-        print(settings)
+        # print("Utils->getTimeDelta:", settings)
         return settings.fixed_delta_seconds 
 
     #region geometries and vector ops
@@ -317,8 +318,6 @@ class Utils:
 
 
 
-
-
     #endregion
 
     #region drawing
@@ -356,7 +355,7 @@ class Utils:
     @staticmethod
     def draw_trace_route(debug, route, color=(150, 150, 0), life_time=10):
         
-        print(f"length of trace route {len(route)}")
+        print(f"Utils->draw_trace_route: length of trace route {len(route)}")
         wps = []
         for (wp, ro) in route:
             wps.append(wp)
@@ -436,7 +435,7 @@ class Utils:
             circle1 = plt.Circle((point.x, point.y), 0.2, color='orange')
             plt.gca().add_patch(circle1)
         else:
-            print("No conflict point")
+            print("Utils->drawConflictPointOnGraph: No conflict point")
 
         plt.show()
 
