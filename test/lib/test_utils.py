@@ -96,5 +96,3 @@ def test_conflict_point():
     vel2 = Utils.getVelocityWithNewSpeed(vel2, 2)
 
     Utils.drawConflictPointOnGraph(vel1, start1, vel2, start2, seconds)
-
-

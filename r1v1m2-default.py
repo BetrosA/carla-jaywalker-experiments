@@ -7,7 +7,7 @@ from lib import MapNames
 @click.option(
     '--max_ticks',
     metavar='number',
-    default=1000,
+    default=200,
     type=int,
     help='Number of ticks the simulator will run'
     )

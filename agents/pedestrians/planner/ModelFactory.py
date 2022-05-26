@@ -6,11 +6,9 @@ from ..PedestrianAgent import PedestrianAgent
 from lib import ActorManager, ObstacleManager, LoggerFactory, TooManyNewStates
 from agents.pedestrians.factors import *
 from ..DestinationModel import DestinationModel
-from ..factors.DrunkenWalkModel import DrunkenWalkModel
 from ..gap_models import *
 from agents.pedestrians.StopGoModel import StopGoModel
 from ..factors.CrossingOncomingFactorModel import CrossingOncomingFactorModel
-from ..factors.FreezingModel import FreezingModel
 from ..survival_models.SurvivalDestinationModel import SurvivalDestinationModel
 from .SpeedModelFactory import SpeedModelFactory
 from ..factors.AggressiveCrossingFactorModel import AggressiveCrossingFactorModel
@@ -79,12 +77,9 @@ class ModelFactory:
 
     def createOptionalModels(self, optionalFactors: List[Factors]):
 
-        if optionalFactors is None:
-            return
-
         self.createCrossingModels(optionalFactors)
+
         self.createSurvivalModels(optionalFactors)
-        self.createFreezingModels(optionalFactors)
 
 
     #region crossing models
@@ -92,8 +87,6 @@ class ModelFactory:
 
         if Factors.CROSSING_ON_COMING_VEHICLE in optionalFactors:
             self.createCrossingOncomingVehicleModel(optionalFactors)
-        if Factors.DRUNKEN_WALKER in optionalFactors:
-            self.createDrunkinWalkModels(optionalFactors)
 
 
     def createCrossingOncomingVehicleModel(self, optionalFactors: List[Factors]):
@@ -141,27 +134,3 @@ class ModelFactory:
         self.planner.models.append(self.planner.AggressiveCrossingFactorModel)
         self.planner.crossingFactorModels.append(self.planner.AggressiveCrossingFactorModel)
         self.planner.stateTransitionModels.append(self.planner.AggressiveCrossingFactorModel)
-      
-    def createDrunkinWalkModels(self, optionalFactors: List[Factors]):
-        if Factors.DRUNKEN_WALKER in optionalFactors:
-            drunkenwalk = DrunkenWalkModel(self.agent, self.actorManager, self.obstacleManager, self.internalFactors)
-            self.planner.models.append(drunkenwalk)
-            
-            
-
-    #endregion
-
-    #region freezing models
-    
-    def createFreezingModels(self, optionalFactors: List[Factors]):
-        if Factors.FREEZING_FACTOR in optionalFactors:
-            freezingModel = FreezingModel(
-                                    self.agent, 
-                                    actorManager=self.actorManager, obstacleManager=self.obstacleManager, 
-                                    internalFactors=self.internalFactors
-                            )
-
-        self.planner.models.append(freezingModel)
-        self.planner.freezingModels.append(freezingModel)
-        self.planner.stateTransitionModels.append(freezingModel)
-

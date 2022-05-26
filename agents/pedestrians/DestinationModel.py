@@ -98,18 +98,17 @@ class DestinationModel(ForceModel):
     
     def getDesiredVelocity(self) -> carla.Vector3D:
 
-        speed = self.getDesiredSpeed()
-        
+        if self.speedModel is None:
+            speed = self.internalFactors["desired_speed"]
+        else:
+            speed = self.speedModel.desiredSpeed
+
         self.agent.logger.info(f"Desired speed is {speed}")
 
         return self.getDesiredDirection() * speed 
 
     def getDesiredSpeed(self) -> carla.Vector3D:
-        if self.speedModel is None:
-            speed = self.internalFactors["desired_speed"]
-        else:
-            speed = self.speedModel.desiredSpeed
-        return speed
+        return self.internalFactors["desired_speed"] 
 
 
     def getDesiredDirection(self) -> carla.Vector3D:

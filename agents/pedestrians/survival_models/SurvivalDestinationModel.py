@@ -1,3 +1,4 @@
+from sys import prefix
 import carla
 import numpy as np
 from lib import ActorManager, ObstacleManager, Utils

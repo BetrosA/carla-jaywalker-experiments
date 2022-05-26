@@ -65,7 +65,6 @@ class PedestrianFactory(ClientUser):
         walkerBp = self.create()
         # walkerBp.set_attribute('is_invincible', 'true')  
         walker = self.world.spawn_actor(walkerBp, spawnPoint)
-
         self.walkers.append(walker)
         return walker
     

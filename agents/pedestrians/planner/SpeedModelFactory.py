@@ -10,8 +10,7 @@ class SpeedModelFactory:
     modelNameMap = {
         "static": StaticSpeedModel,
         "random": RandomSpeedModel,
-        "aggresive": AggresiveSpeedModel,
-        "relaxation": RelaxationSpeedModel
+        "aggresive": AggresiveSpeedModel
     }
 
     @staticmethod

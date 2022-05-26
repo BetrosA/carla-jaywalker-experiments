@@ -31,9 +31,6 @@ class PedestrianPlanner:
         self.stateTransitionModels: List[StateTransitionModel] = []
         self.crossingFactorModels: List[CrossingFactorModel] = []
         self.survivalModels: List[SurvivalModel] = []
-        self.freezingModels: List[SurvivalModel] = []
-
-        self.modelCoeff: Dict[str, float] = {}
 
         self.modelForces: Dict[str, carla.Vector3D] = {} # tracks the forces for the next tick
 
@@ -41,8 +38,6 @@ class PedestrianPlanner:
         deqLength = max(1, int(2 / self.time_delta))
         self.logger.warn(f"remembering {deqLength} tick locations")
         self.locations: List[carla.Location] = deque(maxlen=deqLength) # list of previous locations of this agent.
-
-
 
         pass
 
@@ -65,9 +60,6 @@ class PedestrianPlanner:
 
     def getInternalFactor(self, name):
         return self.internalFactors[name] 
-
-    def setInternalFactor(self, name, val):
-        self.internalFactors[name] = val
 
     @property
     def desiredSpeed(self):
@@ -98,13 +90,6 @@ class PedestrianPlanner:
     def destination(self):
         return self._destination
 
-
-    def reset(self):
-        for name in self.modelCoeff:
-            self.modelCoeff[name] = 1.0
-        
-    def updateModelCoeff(self, name, val):
-        self.modelCoeff[name] = val
         
     def isMovingTowardsDestination(self):
 

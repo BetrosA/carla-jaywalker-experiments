@@ -121,11 +121,6 @@ class PedestrianAgent(InfoAgent):
             return True
         return False
 
-    def isFrozen(self):
-        if self.state == PedState.FROZEN:
-            return True
-        return False
-
     def isFinished(self):
         if self.state == PedState.FINISHED:
             return True
@@ -191,9 +186,6 @@ class PedestrianAgent(InfoAgent):
 
     def reset(self, newStartPoint:carla.Location=None):
         self.logger.info(f"Resetting")
-        
-        self._localPlanner.reset()
-
         if newStartPoint is not None:
             self._walker.set_location(newStartPoint)
 
